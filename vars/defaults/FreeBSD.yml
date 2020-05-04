@@ -19,5 +19,7 @@ rsnapshot_cmd_rsync: "/usr/local/bin/rsync"
 rsnapshot_cmd_ssh: "/usr/bin/ssh"
 rsnapshot_cmd_logger: "/usr/bin/logger"
 
+rsnapshot_systemd_timers: false  # For systemd only. Use cron instead
+
 # EOF
 ...

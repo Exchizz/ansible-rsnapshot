@@ -24,6 +24,13 @@
       {{ rsnapshot_packages|to_nice_yaml }}
 
       rsnapshot_config_version [{{ rsnapshot_config_version }}]
+
+      rsnapshot_systemd_timers [{{ rsnapshot_systemd_timers }}]
+      rsnapshot_systemd_postfix [{{ rsnapshot_systemd_postfix }}]
+      rsnapshot_systemd_preexec [{{ rsnapshot_systemd_preexec }}]
+      rsnapshot_systemd_postexec [{{ rsnapshot_systemd_postexec }}]
+      rsnapshot_systemd_onfailure [{{ rsnapshot_systemd_onfailure }}]
+
 # TODO: Complete variables
 #      rsnapshot_ [{{ rsnapshot_ }}]
 #      rsnapshot_
