@@ -29,6 +29,7 @@ rsnapshot_retain_monthly: "3"
 # GLOBAL OPTIONS
 rsnapshot_verbose: "2"
 rsnapshot_loglevel: "3"
+rsnapshot_enable_log: yes
 rsnapshot_logfile: "/var/log/rsnapshot"
 rsnapshot_lockfile: "/var/run/rsnapshot.pid"
 # rsync_short_args       -a
@@ -56,5 +57,11 @@ rsnapshot_backup_points_test: []
 rsnapshot_exclude: []
 #  - { regex: ".git/" }
 
+# systemd options
+enable_systemd_timers: yes
+rsnapshot_systemd_postfix: ""
+rsnapshot_systemd_preexec: -1
+rsnapshot_systemd_postexec: -1
+rsnapshot_systemd_onfailure: -1
 # EOF
 ...

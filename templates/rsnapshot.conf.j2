@@ -18,15 +18,26 @@ cmd_logger	{{ rsnapshot_cmd_logger }}
 #linux_lvm_cmd_lvremove	/path/to/lvremove
 #linux_lvm_cmd_mount	/sbin/mount
 #linux_lvm_cmd_umount	/sbin/umount
+
+{% if rsnapshot_retain_hourly != -1 %}
 retain		hourly	{{ rsnapshot_retain_hourly }}
+{% endif %}
+{% if rsnapshot_retain_daily != -1 %}
 retain		daily	{{ rsnapshot_retain_daily }}
+{% endif %}
+{% if rsnapshot_retain_weekly != -1 %}
 retain		weekly	{{ rsnapshot_retain_weekly }}
+{% endif %}
+{% if rsnapshot_retain_monthly != -1 %}
 retain		monthly	{{ rsnapshot_retain_monthly }}
+{% endif %}
 
 # GLOBAL OPTIONS
 verbose		{{ rsnapshot_verbose }}
 loglevel	{{ rsnapshot_loglevel }}
+{% if rsnapshot_enable_log %}
 logfile		{{ rsnapshot_logfile }}
+{% endif %}
 lockfile	{{ rsnapshot_lockfile }}
 #rsync_short_args	-a
 #rsync_long_args	--delete --numeric-ids --relative --delete-excluded
@@ -51,7 +62,7 @@ link_dest	{{ rsnapshot_link_dest }}
 
 ### BACKUP POINTS/SCRIPTS
 {% for item  in rsnapshot_backup_points %}
-backup	{{ item.dir }}	{{ item.host }}
+backup	{{ item.dir }}	{{ item.host }}	{{ item.options | default('') }}
 {% endfor %}
 
 ### EXCLUDE 
