@@ -1,0 +1,38 @@
+---
+
+- name: "systemd: Create configuration"
+  include_tasks: systemd-conf.yml
+  loop: "{{ rsnapshot_systemd_conf|dict2items }}"
+  loop_control:
+    loop_var: oitem
+  vars:
+    rsnapshot_config_file: "{{ '/etc/rsnapshot_' ~  oitem.key ~ '.conf' }}"
+    postfix: "{{ oitem.key }}"
+    conf: "{{ oitem.value }}"
+  tags: rsnapshot_systemd_conf
+
+- name: "systemd: Create service and timers"
+  include_tasks: systemd-service.yml
+  loop: "{{ rsnapshot_systemd_conf|dict2items }}"
+  loop_control:
+    loop_var: oitem
+  vars:
+    rsnapshot_systemd_name: "{{ '/etc/systemd/system/rsnapshot_' ~  oitem.key }}"
+    postfix: "{{ oitem.key }}"
+    conf: "{{ oitem.value }}"
+  tags: rsnapshot_systemd_service
+
+- name: "systemd: Get systemd timers"  # noqa 303
+  command: systemctl list-timers
+  register: result
+  when: rsnapshot_debug|bool
+  tags: rsnapshot_systemd_debug
+
+- name: "systemd: Display systemd timers"
+  debug:
+    var: result.stdout_lines
+  when: rsnapshot_debug|bool
+  tags: rsnapshot_systemd_debug
+
+# EOF
+...

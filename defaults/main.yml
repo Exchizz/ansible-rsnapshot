@@ -16,9 +16,10 @@ rsnapshot_test: false
 rsnapshot_backup_conf: false
 
 rsnapshot_config_version: "1.2"
+rsnapshot_snapshot_root_create: true
+rsnapshot_snapshot_root_owner: "root"
 rsnapshot_snapshot_root: "/export/backup/snapshots"
 rsnapshot_snapshot_root_test: "/export/backup/snapshots-test"
-rsnapshot_snapshot_root_owner: "root"
 rsnapshot_no_create_root: "1"
 
 rsnapshot_retain_hourly: "6"
@@ -57,8 +58,9 @@ rsnapshot_backup_points_test: []
 rsnapshot_exclude: []
 #  - { regex: ".git/" }
 
-# systemd options
-rsnapshot_systemd_postfix: ""
+# systemd options (Linux only)
+rsnapshot_systemd: false
+rsnapshot_systemd_conf: {}
 rsnapshot_systemd_preexec: -1
 rsnapshot_systemd_postexec: -1
 rsnapshot_systemd_onfailure: -1

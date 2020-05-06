@@ -24,12 +24,44 @@
       {{ rsnapshot_packages|to_nice_yaml }}
 
       rsnapshot_config_version [{{ rsnapshot_config_version }}]
+      rsnapshot_config_file [{{ rsnapshot_config_file }}]
+      rsnapshot_config_file_test [{{ rsnapshot_config_file_test }}]
+      rsnapshot_config_file_owner [{{ rsnapshot_config_file_owner }}]
+      rsnapshot_config_file_group [{{ rsnapshot_config_file_group }}]
+      rsnapshot_config_file_mode [{{ rsnapshot_config_file_mode }}]
 
-      rsnapshot_systemd_timers [{{ rsnapshot_systemd_timers }}]
-      rsnapshot_systemd_postfix [{{ rsnapshot_systemd_postfix }}]
+      rsnapshot_snapshot_root_create [{{ rsnapshot_snapshot_root_create }}]
+      rsnapshot_snapshot_root [{{ rsnapshot_snapshot_root }}]
+      rsnapshot_snapshot_root_test [{{ rsnapshot_snapshot_root_test }}]
+      rsnapshot_snapshot_root_owner [{{ rsnapshot_snapshot_root_owner }}]
+      rsnapshot_snapshot_root_group [{{ rsnapshot_snapshot_root_group }}]
+      rsnapshot_snapshot_root_mode [{{ rsnapshot_snapshot_root_mode }}]
+      rsnapshot_no_create_root [{{ rsnapshot_no_create_root }}]
+
+      rsnapshot_retain_hourly [{{ rsnapshot_retain_hourly }}]
+      rsnapshot_retain_daily [{{ rsnapshot_retain_daily }}]
+      rsnapshot_retain_weekly [{{ rsnapshot_retain_weekly }}]
+      rsnapshot_retain_monthly [{{ rsnapshot_retain_monthly }}]
+      rsnapshot_verbose [{{ rsnapshot_verbose }}]
+      rsnapshot_loglevel [{{ rsnapshot_loglevel }}]
+      rsnapshot_enable_log [{{ rsnapshot_enable_log }}]
+      rsnapshot_logfile [{{ rsnapshot_logfile }}]
+      rsnapshot_lockfile [{{ rsnapshot_lockfile }}]
+      rsnapshot_link_dest [{{ rsnapshot_link_dest }}]
+
+      rsnapshot_backup_points
+      {{ rsnapshot_backup_points|to_nice_yaml }}
+      rsnapshot_backup_points_test
+      {{ rsnapshot_backup_points_test|to_nice_yaml }}
+      rsnapshot_exclude
+      {{ rsnapshot_exclude|to_nice_yaml }}
+
+      rsnapshot_systemd [{{ rsnapshot_systemd }}]
       rsnapshot_systemd_preexec [{{ rsnapshot_systemd_preexec }}]
       rsnapshot_systemd_postexec [{{ rsnapshot_systemd_postexec }}]
       rsnapshot_systemd_onfailure [{{ rsnapshot_systemd_onfailure }}]
+      rsnapshot_systemd_conf
+      {{ rsnapshot_systemd_conf|to_nice_yaml }}
 
 # TODO: Complete variables
 #      rsnapshot_ [{{ rsnapshot_ }}]

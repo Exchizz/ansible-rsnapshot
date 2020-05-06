@@ -19,8 +19,6 @@ rsnapshot_cmd_rsync: "/usr/bin/rsync"
 rsnapshot_cmd_ssh: "/usr/bin/ssh"
 rsnapshot_cmd_logger: "/usr/bin/logger"
 
-rsnapshot_systemd_timers: false
-
 # cmd_du         /usr/bin/du
 # cmd_rsnapshot_diff     /usr/local/bin/rsnapshot-diff
 # cmd_preexec    /path/to/preexec/script

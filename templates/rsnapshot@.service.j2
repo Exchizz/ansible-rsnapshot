@@ -1,17 +1,17 @@
 [Unit]
 Description=rsnapshot (%I) backup
-{% if rsnapshot_systemd_onfailure  != -1 %}
-OnFailure={{ rsnapshot_systemd_onfailure }}
+{% if conf.rsnapshot_systemd_onfailure|default(rsnapshot_systemd_onfailure) != -1 %}
+OnFailure={{ conf.rsnapshot_systemd_onfailure|default(rsnapshot_systemd_onfailure) }}
 {% endif %}
 
 [Service]
 Type=oneshot
-{% if rsnapshot_systemd_preexec  != -1 %}
-ExecStartPre={{ rsnapshot_systemd_preexec }}
+{% if conf.rsnapshot_systemd_preexec|default(rsnapshot_systemd_preexec) != -1 %}
+ExecStartPre={{ conf.rsnapshot_systemd_preexec|default(rsnapshot_systemd_preexec) }}
 {% endif %}
-{% if rsnapshot_systemd_postexec  != -1 %}
-ExecStartPost={{ rsnapshot_systemd_postexec }}
+{% if conf.rsnapshot_systemd_postexec|default(rsnapshot_systemd_postexec) != -1 %}
+ExecStartPost={{ conf.rsnapshot_systemd_postexec|default(rsnapshot_systemd_postexec) }}
 {% endif %}
 Nice=19
 IOSchedulingClass=idle
-ExecStart=/usr/bin/rsnapshot -c "/etc/rsnapshot{{ rsnapshot_systemd_postfix }}.conf" %I
+ExecStart=/usr/bin/rsnapshot -c "/etc/rsnapshot_{{ postfix }}.conf" %I

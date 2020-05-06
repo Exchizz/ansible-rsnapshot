@@ -1,0 +1,19 @@
+---
+
+- name: "systemd-conf: Debug"
+  vars:
+    msg: |
+      rsnapshot_config_file [{{ rsnapshot_config_file }}]
+      postfix [{{ postfix }}]
+      conf
+      {{ conf|to_nice_yaml }}
+  debug:
+    msg: "{{ msg.split('\n') }}"
+  when: rsnapshot_debug|bool
+  tags: rsnapshot_systemd_conf_debug
+
+- name: "systemd-conf: Configure {{ postfix }}"
+  include_tasks: configure.yml
+
+# EOF
+...

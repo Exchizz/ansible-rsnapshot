@@ -2,14 +2,14 @@
 # PLEASE BE AWARE OF THE FOLLOWING RULE:
 # This file requires tabs between elements
 
-config_version	{{ rsnapshot_config_version }}
-snapshot_root	{{ rsnapshot_snapshot_root }}
-no_create_root	{{ rsnapshot_no_create_root }}
-cmd_cp		{{ rsnapshot_cmd_cp }}
-cmd_rm		{{ rsnapshot_cmd_rm }}
-cmd_rsync	{{ rsnapshot_cmd_rsync }}
-cmd_ssh		{{ rsnapshot_cmd_ssh }}
-cmd_logger	{{ rsnapshot_cmd_logger }}
+config_version	{{ conf.rsnapshot_config_version|default(rsnapshot_config_version) }}
+snapshot_root	{{ conf.rsnapshot_snapshot_root|default(rsnapshot_snapshot_root) }}
+no_create_root	{{ conf.rsnapshot_no_create_root|default(rsnapshot_no_create_root) }}
+cmd_cp		{{ conf.rsnapshot_cmd_cp|default(rsnapshot_cmd_cp) }}
+cmd_rm		{{ conf.rsnapshot_cmd_rm|default(rsnapshot_cmd_rm) }}
+cmd_rsync	{{ conf.rsnapshot_cmd_rsync|default(rsnapshot_cmd_rsync) }}
+cmd_ssh		{{ conf.rsnapshot_cmd_ssh|default(rsnapshot_cmd_ssh) }}
+cmd_logger	{{ conf.rsnapshot_cmd_logger|default(rsnapshot_cmd_logger) }}
 #cmd_du		   	/usr/bin/du
 #cmd_rsnapshot_diff	/usr/local/bin/rsnapshot-diff
 #cmd_preexec		/path/to/preexec/script
@@ -19,26 +19,26 @@ cmd_logger	{{ rsnapshot_cmd_logger }}
 #linux_lvm_cmd_mount	/sbin/mount
 #linux_lvm_cmd_umount	/sbin/umount
 
-{% if rsnapshot_retain_hourly != -1 %}
-retain		hourly	{{ rsnapshot_retain_hourly }}
+{% if conf.rsnapshot_retain_hourly|default(rsnapshot_retain_hourly) != -1 %}
+retain		hourly	{{ conf.rsnapshot_retain_hourly|default(rsnapshot_retain_hourly) }}
 {% endif %}
-{% if rsnapshot_retain_daily != -1 %}
-retain		daily	{{ rsnapshot_retain_daily }}
+{% if conf.rsnapshot_retain_daily|default(rsnapshot_retain_daily) != -1 %}
+retain		daily	{{ conf.rsnapshot_retain_daily|default(rsnapshot_retain_daily) }}
 {% endif %}
-{% if rsnapshot_retain_weekly != -1 %}
-retain		weekly	{{ rsnapshot_retain_weekly }}
+{% if conf.rsnapshot_retain_weekly|default(rsnapshot_retain_weekly) != -1 %}
+retain		weekly	{{ conf.rsnapshot_retain_weekly|default(rsnapshot_retain_weekly) }}
 {% endif %}
-{% if rsnapshot_retain_monthly != -1 %}
-retain		monthly	{{ rsnapshot_retain_monthly }}
+{% if conf.rsnapshot_retain_monthly|default(rsnapshot_retain_monthly) != -1 %}
+retain		monthly	{{ conf.rsnapshot_retain_monthly|default(rsnapshot_retain_monthly) }}
 {% endif %}
 
 # GLOBAL OPTIONS
-verbose		{{ rsnapshot_verbose }}
-loglevel	{{ rsnapshot_loglevel }}
-{% if rsnapshot_enable_log %}
-logfile		{{ rsnapshot_logfile }}
+verbose		{{ conf.rsnapshot_verbose|default(rsnapshot_verbose) }}
+loglevel	{{ conf.rsnapshot_loglevel|default(rsnapshot_loglevel) }}
+{% if conf.rsnapshot_enable_log|default(rsnapshot_enable_log) %}
+logfile		{{ conf.rsnapshot_logfile|default(rsnapshot_logfile) }}
 {% endif %}
-lockfile	{{ rsnapshot_lockfile }}
+lockfile	{{ conf.rsnapshot_lockfile|default(rsnapshot_lockfile) }}
 #rsync_short_args	-a
 #rsync_long_args	--delete --numeric-ids --relative --delete-excluded
 #ssh_args	-p 22
@@ -51,7 +51,7 @@ lockfile	{{ rsnapshot_lockfile }}
 #exclude	???
 #include_file	/path/to/include/file
 #exclude_file	/path/to/exclude/file
-link_dest	{{ rsnapshot_link_dest }}
+link_dest	{{ conf.rsnapshot_link_dest|default(rsnapshot_link_dest) }}
 #sync_first	   	0
 #use_lazy_deletes	0
 #rsync_numtries		0
@@ -61,12 +61,12 @@ link_dest	{{ rsnapshot_link_dest }}
 #linux_lvm_mountpath	/path/to/mount/lvm/snapshot/during/backup
 
 ### BACKUP POINTS/SCRIPTS
-{% for item  in rsnapshot_backup_points %}
+{% for item  in conf.rsnapshot_backup_points|default(rsnapshot_backup_points) %}
 backup	{{ item.dir }}	{{ item.host }}	{{ item.options|default('') }}
 {% endfor %}
 
 ### EXCLUDE 
-{% for item  in rsnapshot_exclude %}
+{% for item  in conf.rsnapshot_exclude|default(rsnapshot_exclude) %}
 exclude	{{ item.regex }}
 {% endfor %}
 

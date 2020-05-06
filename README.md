@@ -11,40 +11,49 @@ Please feel free to [share your feedback and report issues](https://github.com/v
 
 None.
 
-## Example
-```
-tasks:
-  - include_role:
-       name: ansible-rsnapshot
-     vars:
-       - rsnapshot_systemd_postfix: "_projectX"
-       - rsnapshot_config_file: /etc/rsnapshot_projectX.conf
-       - rsnapshot_lockfile: "/var/run/rsnapshot_projectX.pid"
-       - rsnapshot_snapshot_root: "/mnt/bkup_dst/"
-       - rsnapshot_backup_points:
-         - dir: '/mnt/ProjectX_src/'
-           host: 'HostA'
-           options: '+rsync_long_args=--no-relative'
-       - rsnapshot_retain_monthly: 6
-       - rsnapshot_retain_weekly: 4
-       - rsnapshot_retain_daily: 7
-       - rsnapshot_retain_hourly: -1
-       - rsnapshot_link_dest: 0
-       - rsnapshot_systemd_preexec: "/usr/local/sbin/preScript.sh"
-       - rsnapshot_systemd_postexec: "/usr/local/sbin/PostScript.sh"
-       - rsnapshot_systemd_onfailure: "/usr/local/sbin/failureScript.sh"
-       - rsnapshot_verbose: "3"
-```
-
 
 ## Role Variables
 
 Review the defaults and examples in vars.
 
+### Backup points
+
 By default there are no backup points defined by variables **rsnapshot_backup_points** and **rsnapshot_backup_points_test**. At least one backup point must be defined. Otherwise rsnapshot will fail with the error:
 
 ```
 ERROR: At least one backup point must be set. rsnapshot can not continue.
+```
+
+### Enable systemd timers
+
+By default the systemd timers are diabled 'rsnapshot_systemd: false'
+
+
+Example of enabled systemd timers
+
+```
+tasks:
+  - include_role:
+      name: ansible-rsnapshot
+    vars:
+      rsnapshot_systemd: true
+      rsnapshot_systemd_conf:
+        projectX:
+          rsnapshot_lockfile: /var/run/rsnapshot_projectX.pid
+          rsnapshot_snapshot_root: /mnt/bkup_dst/
+          rsnapshot_backup_points:
+            - dir: '/mnt/ProjectX_src/'
+              host: 'HostA'
+              options: '+rsync_long_args=--no-relative'
+          rsnapshot_retain_monthly: 6
+          rsnapshot_retain_weekly: 4
+          rsnapshot_retain_daily: 7
+          rsnapshot_retain_hourly: -1
+          rsnapshot_link_dest: 0
+          rsnapshot_systemd_preexec: "/usr/local/sbin/preScript.sh"
+          rsnapshot_systemd_postexec: "/usr/local/sbin/PostScript.sh"
+          rsnapshot_systemd_onfailure: "/usr/local/sbin/failureScript.sh"
+          rsnapshot_verbose: "3"
 ```
 
 

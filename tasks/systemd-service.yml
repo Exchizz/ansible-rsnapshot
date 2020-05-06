@@ -1,0 +1,57 @@
+---
+
+- name: "systemd-service: Install rsnapshot service"
+  template:
+    src: "rsnapshot@.service.j2"
+    dest: "{{ rsnapshot_systemd_name }}@.service"
+    owner: root
+    group: root
+    mode: '0644'
+  tags: rsnapshot_systemd_service_install
+
+- name: "systemd-service: Install rsnapshot timers"
+  template:
+    src: "rsnapshot-{{ item }}.timer.j2"
+    dest: "{{ rsnapshot_systemd_name }}-{{ item }}.timer"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - monthly
+    - weekly
+    - daily
+    - hourly
+  tags: rsnapshot_systemd_timers_install
+
+- name: "systemd-service: Enable rsnapshot timers"
+  systemd:
+    name: "{{ rsnapshot_systemd_name }}-{{ item }}.timer"
+    daemon_reload: true
+    enabled: true
+    masked: false
+    state: restarted
+  loop:
+    - monthly
+    - weekly
+    - daily
+    - hourly
+  when: "conf['rsnapshot_retain_' ~ item] != '-1'"
+  tags: rsnapshot_systemd_timers_enable
+
+- name: "systemd-service: Disable rsnapshot timers"
+  systemd:
+    name: "{{ rsnapshot_systemd_name  }}-{{ item }}.timer"
+    daemon_reload: true
+    enabled: false
+    masked: true
+    state: stopped
+  loop:
+    - monthly
+    - weekly
+    - daily
+    - hourly
+  when: "conf['rsnapshot_retain_' ~ item] == '-1'"
+  tags: rsnapshot_systemd_timers_disable
+
+# EOF
+...

@@ -18,9 +18,9 @@
   when: rsnapshot_test|bool
   tags: rsnapshot_test
 
-- import_tasks: systemd-timers.yml
-  when: rsnapshot_systemd_timers|bool
-  tags: rsnapshot_systemd_timers
+- import_tasks: systemd.yml
+  when: rsnapshot_systemd|bool
+  tags: rsnapshot_systemd
 
 # EOF
 ...

@@ -1,20 +1,22 @@
 ---
 
-- name: "configure: Create directory {{ rsnapshot_snapshot_root }}"
+- name: "configure: Create directory {{ conf.rsnapshot_snapshot_root|
+                                        default(rsnapshot_snapshot_root) }}"
   file:
     state: directory
-    path: "{{ rsnapshot_snapshot_root }}"
-    owner: "{{ rsnapshot_snapshot_root_owner }}"
-    group: "{{ rsnapshot_snapshot_root_group }}"
-    mode: "{{ rsnapshot_snapshot_root_mode }}"
+    path: "{{ conf.rsnapshot_snapshot_root|default(rsnapshot_snapshot_root) }}"
+    owner: "{{ conf.rsnapshot_snapshot_root_owner|default(rsnapshot_snapshot_root_owner) }}"
+    group: "{{ conf.rsnapshot_snapshot_root_group|default(rsnapshot_snapshot_root_group) }}"
+    mode: "{{ conf.rsnapshot_snapshot_root_mode|default(rsnapshot_snapshot_root_mode) }}"
+  when: rsnapshot_snapshot_root_create|bool
 
 - name: "configure: Create configuration {{ rsnapshot_config_file }}"
   template:
     src: rsnapshot.conf.j2
     dest: "{{ rsnapshot_config_file }}"
-    owner: "{{ rsnapshot_config_file_owner }}"
-    group: "{{ rsnapshot_config_file_group }}"
-    mode: "{{ rsnapshot_config_file_mode }}"
+    owner: "{{ conf.rsnapshot_config_file_owner|default(rsnapshot_config_file_owner) }}"
+    group: "{{ conf.rsnapshot_config_file_group|default(rsnapshot_config_file_group) }}"
+    mode: "{{ conf.rsnapshot_config_file_mode|default(rsnapshot_config_file_mode) }}"
     backup: "{{ rsnapshot_backup_conf }}"
     validate: "rsnapshot -c %s configtest"
 
