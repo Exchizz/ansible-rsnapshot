@@ -17,7 +17,7 @@
   loop_control:
     loop_var: oitem
   vars:
-    rsnapshot_systemd_name: "{{ '/etc/systemd/system/rsnapshot_' ~  oitem.key }}"
+    rsnapshot_systemd_name: "{{ 'rsnapshot_' ~  oitem.key }}"
     postfix: "{{ oitem.key }}"
     conf: "{{ oitem.value }}"
   tags: rsnapshot_systemd_service
